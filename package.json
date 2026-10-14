@@ -1,5 +1,32 @@
 {
+  "name": "mern_skeleton",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "author": "Blessing",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.2.5",
+    "nodemon": "^3.1.14"
+  },
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix client\" \"nodemon server.js\""
+    "dev": "concurrently \"npm run dev --prefix client\" \"nodemon server.js\"",
+    "build": "vite build",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "compression": "^1.8.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.7",
+    "express": "^5.1.0",
+    "global": "^4.4.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.11.2"
   }
 }

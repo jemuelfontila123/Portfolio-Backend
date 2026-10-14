@@ -1,12 +1,52 @@
-# React + Vite
+# Jemuel Fontila — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio website built with React and Vite to showcase my background, education, projects, services, and software development experience.
 
-Currently, two official plugins are available:
+## Live Website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+View the deployed portfolio here:
 
-## Expanding the ESLint configuration
+https://jemuelfontila123.github.io/Portfolio-Project/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## About the Project
+
+This portfolio was created to present my skills and experience as a software developer. It includes information about my educational background, previous experience, projects I have worked on, and the software development services I offer.
+
+## Pages
+
+- Home
+- About
+- Projects
+- Education
+- Services
+- Contact
+
+## Featured Projects
+
+### QR Scanning for Vaccination Records
+A web and mobile application designed to generate and verify QR codes for COVID-19 vaccination records.
+
+### Online Examination System
+A web-based examination system that allows students to complete timed assessments online and receive results.
+
+### Non-Express Entry Community
+A community platform where applicants can share their experiences, application progress, timelines, and information about non-Express Entry immigration pathways.
+
+## Technologies Used
+
+- React
+- JavaScript
+- HTML
+- CSS
+- React Router
+- Vite
+- Git
+- GitHub
+- GitHub Pages
+
+## Running the Project Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/jemuelfontila123/Portfolio-Project.git
