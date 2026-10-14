@@ -58,7 +58,22 @@ const userController = {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ error: "Not found" });
     res.status(204).end();
-  })
+  }),
+
+  removeAll: asyncHandler(async (req, res) => {
+      // 1. Hard safety check against production
+      if (process.env.NODE_ENV === "production") {
+        return res.status(403).json({ 
+          error: "Destructive actions are disabled in production" 
+        });
+      }
+      // 2. Wipe the specific model's collection
+      await User.deleteMany({});
+      res.status(200).json({
+        status: "success",
+        message: `All records for ${User.modelName} have been removed successfully.`
+      });
+    })
 };
 
 export default userController;
