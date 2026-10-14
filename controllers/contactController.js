@@ -1,25 +1,11 @@
 import Contact from "../models/Contact.js";
+import createCrudController from "./crudController.js";
 
-export const createContact = async (req, res) => {
-  try {
-    const contact = await Contact.create(req.body);
 
-    res.status(201).json({
-      message: "Contact saved successfully",
-      data: contact
-    });
-  } catch (error) {
-    if (error.name === "ValidationError") {
-      return res.status(400).json({
-        message: "Validation failed",
-        errors: error.message
-      });
-    }
+const DEFAULT_FIELDS = ["firstName", "lastName", "contactNumber", "email", "message"];
 
-    console.error("Contact creation error:", error);
+const contactController = createCrudController(Contact, DEFAULT_FIELDS);
 
-    res.status(500).json({
-      message: "Internal server error"
-    });
-  }
-};
+// Kept so your existing contactRoutes.js (which imports createContact) still works
+
+export default contactController;
