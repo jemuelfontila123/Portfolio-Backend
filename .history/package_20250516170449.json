@@ -1,0 +1,22 @@
+{
+  "name": "mern_skeleton",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Blessing",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10"
+  },
+    "scripts": {
+        "dev": "concurrently 'vite' \"nodemon server.js\"",
+        "build": "vite build",
+        "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview"
+      },
+      "dependencies": {
+     "global": "^4.4.0"
+     }
+    }
+    
+}

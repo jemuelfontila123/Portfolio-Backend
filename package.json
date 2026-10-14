@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix client\" \"nodemon server.js\""
+  }
+}
