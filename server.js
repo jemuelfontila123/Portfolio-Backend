@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./server/express.js";
-import router from "./server/assets-router.js";
-import contactRouter from "./routes/contactRoutes.js"
+import mountRoutes from "./routes/index.js";
 dotenv.config();
 // Check if URI is loaded properly
 console.log(process.env.MONGODB_URI)
@@ -30,12 +29,7 @@ console.log(
 );
 
 
-// // Fallback route
-// app.use("/", function (req, res) {
-//   res.send("Welcome to User application");
-// });
-
-app.use("/api", contactRouter);
+mountRoutes(app);
 
 // Start the server on port 5000
 const PORT = process.env.PORT || 5000;
