@@ -6,17 +6,17 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || "1d"
+    // expiresIn: process.env.JWT_EXPIRES_IN || "1d"
   });
 };
 
 const authController = {
   signup: asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body || {};
+    const { name, email, password, role} = req.body || {};
     if (!password) return res.status(400).json({ error: "Password is required" });
 
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = await User.create({ name, email, passwordHash });
+    const user = await User.create({ name, email, role, passwordHash });
 
     const token = signToken(user._id);
 

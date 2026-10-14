@@ -57,7 +57,10 @@ const userController = {
   remove: asyncHandler(async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ error: "Not found" });
-    res.status(204).end();
+      res.status(200).json({
+      status: "success",
+      message: `${user.name} has been successfully deleted.`
+    });
   }),
 
   removeAll: asyncHandler(async (req, res) => {

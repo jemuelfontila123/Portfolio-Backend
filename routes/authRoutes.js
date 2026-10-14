@@ -1,7 +1,6 @@
 import { Router } from "express";
 import authController from "../controllers/authController.js";
-import { serializeUser } from "../serializers/userSerializer.js";
-import { protect } from "../middleware/authMiddleware.js";
+
 
 const authRouter = Router();
 
