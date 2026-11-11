@@ -5,13 +5,13 @@ import { restrictTo } from "../middleware/restrictMiddleware.js";
 const projectRouter = express.Router();
 
 projectRouter.route("/")
-  .get(projectController.list)
-  .post(projectController.create)
+  .get(protect,projectController.list)
+  .post(protect,projectController.create)
   .delete(protect, restrictTo("admin"), projectController.removeAll); // DELETE all contacts
   
 projectRouter.route("/:id")
-  .get(projectController.get)
-  .patch(projectController.update)
-  .delete(projectController.remove);
+  .get(protect,projectController.get)
+  .patch(protect,projectController.update)
+  .delete(protect,projectController.remove);
 
 export default projectRouter;

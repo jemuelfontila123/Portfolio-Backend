@@ -9,7 +9,7 @@ import Projects from "./pages/Projects";
 import Education from "./pages/Education";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
-
+import SignUp from "./pages/SignUp";
 function App() {
   return (
     <div>
@@ -22,6 +22,8 @@ function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/signup" element = {<SignUp/>}/>
+          
         </Routes>
       </main>
 

@@ -374,3 +374,69 @@ main {
     gap: 0;
   }
 }
+
+/* ------------------------------------------------------------
+   Form additions 
+   ------------------------------------------------------------ */
+
+/* Narrower form for sign in / sign up */
+.auth-form {
+  max-width: 460px;
+}
+
+/* Invalid inputs */
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: #b3261e;
+}
+
+.field-error {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: #b3261e;
+}
+
+/* Form-level messages */
+.form-error,
+.form-success {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-radius: 7px;
+  font-size: 0.9rem;
+}
+
+.form-error {
+  color: #b3261e;
+  background: #fdf0ef;
+  border: 1px solid #f0c9c6;
+}
+
+.form-success {
+  color: #1b5e20;
+  background: #eef7ee;
+  border: 1px solid #c8e2c9;
+}
+
+/* Link under a form */
+.form-footer {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.form-footer a {
+  color: #111;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Disabled button while submitting */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Textareas shouldn't be dragged wider than the form */
+.form-group textarea {
+  resize: vertical;
+}

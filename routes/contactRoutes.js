@@ -7,14 +7,14 @@ const contactRouter = express.Router();
 
 // Routes for handling collections (e.g., /api/contacts)
 contactRouter.route("/")
-  .get(contactController.list)     // GET all contacts
-  .post(contactController.create)        // POST a new contact
+  .get(protect,contactController.list)     // GET all contacts
+  .post(protect,restrictTo("admin"), contactController.create)        // POST a new contact
   .delete(protect, restrictTo("admin"), contactController.removeAll); // DELETE all contacts
 
 // Routes for handling individual items by ID (e.g., /api/contacts/:id)
 contactRouter.route("/:id")
-  .get(contactController.get)        // GET a single contact
-  .patch(contactController.update)   // UPDATE a contact
-  .delete(contactController.remove); // DELETE a single contact
+  .get(protect,restrictTo("admin"), contactController.get)        // GET a single contact
+  .patch(protect,restrictTo("admin"), contactController.update)   // UPDATE a contact
+  .delete(protect, restrictTo("admin"), contactController.remove); // DELETE a single contact
   
 export default contactRouter;

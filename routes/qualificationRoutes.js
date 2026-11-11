@@ -12,6 +12,6 @@ qualificationRouter.route("/")
 qualificationRouter.route("/:id")
   .get(protect,qualificationController.get)
   .patch(protect,qualificationController.update)
-  .delete(qualificationController.remove);
+  .delete(protect,qualificationController.remove);
 
 export default qualificationRouter;
