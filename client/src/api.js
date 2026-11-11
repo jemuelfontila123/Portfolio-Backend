@@ -66,7 +66,7 @@ export const request = async (path, { method = "GET", body, auth = false } = {})
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const error = new Error(data.message || "Incorrect username or passsword.");
+    const error = new Error(data.error || "Invalid resource");
     error.fieldErrors = data.errors;
     throw error;
   }
