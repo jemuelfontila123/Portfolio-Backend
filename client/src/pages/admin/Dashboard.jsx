@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ResourceManager from "./ResourceManager.jsx";
+import ContactManager from "./ContactManager.jsx";
 import { projectsApi, qualificationsApi, clearAuth } from "../../api.js";
 
 const tabs = {
-  projects: { label: "Project", api: projectsApi },
-  qualifications: { label: "Qualification", api: qualificationsApi },
+  projects: {
+    title: "Projects",
+    render: () => <ResourceManager label="Project" api={projectsApi} />,
+  },
+  qualifications: {
+    title: "Qualifications",
+    render: () => <ResourceManager label="Qualification" api={qualificationsApi} />,
+  },
+  contacts: {
+    title: "Contacts",
+    render: () => <ContactManager />,
+  },
 };
 
 export default function Dashboard() {
   const [tab, setTab] = useState("projects");
   const navigate = useNavigate();
-  const { label, api } = tabs[tab];
 
   const signOut = () => {
     clearAuth();
@@ -24,7 +34,7 @@ export default function Dashboard() {
         <div className="section-heading">
           <span className="eyebrow">ADMIN</span>
           <h1>Dashboard</h1>
-          <p>Manage your projects and qualifications.</p>
+          <p>Manage your projects, qualifications and contacts.</p>
           <button className="btn btn-secondary" onClick={signOut}>
             Sign out
           </button>
@@ -41,12 +51,12 @@ export default function Dashboard() {
                 setTab(key);
               }}
             >
-              {tabs[key].label}s
+              {tabs[key].title}
             </a>
           ))}
         </div>
 
-        <ResourceManager label={label} api={api} />
+        {tabs[tab].render()}
       </div>
     </section>
   );

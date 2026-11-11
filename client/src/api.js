@@ -104,6 +104,7 @@ const createResourceApi = (resource) => ({
 
 export const projectsApi = createResourceApi("projects");
 export const qualificationsApi = createResourceApi("qualifications");
+export const contactsApi = createResourceApi("contacts");
 
 // Routes (made up - rename to match your backend)
 export const api = {
