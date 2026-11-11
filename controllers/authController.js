@@ -11,12 +11,14 @@ const signToken = (id) => {
 };
 
 const authController = {
+    // FIX: role is no longer read from the body, so nobody can sign up as admin.
+
   signup: asyncHandler(async (req, res) => {
-    const { name, email, password, role} = req.body || {};
+    const { name, email, password} = req.body || {};
     if (!password) return res.status(400).json({ error: "Password is required" });
 
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = await User.create({ name, email, role, passwordHash });
+    const user = await User.create({ name, email, passwordHash });
 
     const token = signToken(user._id);
 
