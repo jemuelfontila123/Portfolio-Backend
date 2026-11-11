@@ -6,12 +6,12 @@ import { restrictTo } from "../middleware/restrictMiddleware.js";
 const qualificationRouter = express.Router();
 
 qualificationRouter.route("/")
-  .get(qualificationController.list)
-  .post(qualificationController.create)
+  .get(protect, restrictTo("admin"),qualificationController.list)
+  .post(protect, qualificationController.create)
   .delete(protect, restrictTo("admin"), qualificationController.removeAll); // DELETE all contacts
 qualificationRouter.route("/:id")
-  .get(qualificationController.get)
-  .patch(qualificationController.update)
+  .get(protect,qualificationController.get)
+  .patch(protect,qualificationController.update)
   .delete(qualificationController.remove);
 
 export default qualificationRouter;
