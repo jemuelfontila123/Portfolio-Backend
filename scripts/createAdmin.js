@@ -5,10 +5,8 @@ import bcrypt from "bcryptjs";
 
 import User from "../models/User.js";
 
-// Load .env from the backend root directory
-dotenv.config({
-    path: new URL("../.env", import.meta.url)
-});
+dotenv.config();
+
 
 const createAdmin = async () => {
     try {
@@ -25,7 +23,10 @@ const createAdmin = async () => {
         }
 
         // Connect to MongoDB
-        await mongoose.connect(MONGODB_URI);
+        // Connect to MongoDB
+        await mongoose.connect(process.env.MONGODB_URI, {
+          dbName: "Portfolio"
+        });
 
         console.log("Connected to MongoDB.");
 

@@ -10,6 +10,9 @@ import Education from "./pages/Education";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn"
+import Dashboard from "./pages/admin/Dashboard"
+import RequireAuth from "./components/RequireAuth"
 
 const App = () => {
   return (
@@ -27,6 +30,13 @@ const App = () => {
       {/* Standalone layout */}
       <Route element={<StandaloneLayout />}>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/dashboard" element={
+          <RequireAuth>
+          <Dashboard />
+    </RequireAuth>
+      }
+/>
       </Route>
     </Routes>
   );

@@ -1,5 +1,5 @@
 // Change this one value to point at your backend.
-export const API_BASE_URL = "http://localhost:3000/api";
+export const API_BASE_URL = "http://localhost:5000/api";
 
 const AUTH_KEY = "auth";
 
@@ -18,6 +18,24 @@ export const getAuth = () => {
 export const clearAuth = () => {
   localStorage.removeItem(AUTH_KEY);
 };
+
+// Takes the sign-in response { status, token, data: { id, name, email, role } }
+// and stores the token and user (including role) in localStorage.
+export const saveSession = (response) => {
+  saveAuth({
+    token: response.token,
+    user: {
+      id: response.data.id,
+      name: response.data.name,
+      email: response.data.email,
+      role: response.data.role,
+    },
+  });
+};
+
+export const getUser = () => getAuth()?.user || null;
+export const getRole = () => getUser()?.role || null;
+export const isAdmin = () => getRole() === "admin";
 
 /**
  * Small fetch wrapper.
@@ -48,13 +66,44 @@ export const request = async (path, { method = "GET", body, auth = false } = {})
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const error = new Error(data.message || "Something went wrong. Please try again.");
+    const error = new Error(data.message || "Incorrect username or passsword.");
     error.fieldErrors = data.errors;
     throw error;
   }
 
   return data;
 };
+
+/**
+ * True only if a JWT is stored and has not expired.
+ * (Decodes the payload only to read `exp`; the server still verifies the signature.)
+ */
+export const isAuthenticated = () => {
+  const token = getAuth()?.token;
+  if (!token) return false;
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    return !payload.exp || payload.exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+};
+
+// Full CRUD for one resource, always sends the Bearer token.
+const createResourceApi = (resource) => ({
+  list: async () => {
+    const data = await request(`/${resource}`, { auth: true });
+    return Array.isArray(data) ? data : data.data || data.items || [];
+  },
+  create: (body) => request(`/${resource}`, { method: "POST", body, auth: true }),
+  update: (id, body) => request(`/${resource}/${id}`, { method: "PATCH", body, auth: true }),
+  remove: (id) => request(`/${resource}/${id}`, { method: "DELETE", auth: true }),
+  removeAll: () => request(`/${resource}`, { method: "DELETE", auth: true }),
+});
+
+export const projectsApi = createResourceApi("projects");
+export const qualificationsApi = createResourceApi("qualifications");
 
 // Routes (made up - rename to match your backend)
 export const api = {

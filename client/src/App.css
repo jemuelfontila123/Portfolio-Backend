@@ -440,3 +440,59 @@ main {
 .form-group textarea {
   resize: vertical;
 }
+
+/* Small additions for the dashboard. Paste at the bottom of App.css. */
+
+.admin-tabs {
+  margin-bottom: 40px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-list-header {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.admin-actions .btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 800px) {
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
