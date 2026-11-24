@@ -25,7 +25,7 @@ export default function Dashboard() {
 
   const signOut = () => {
     clearAuth();
-    navigate("/admin/signin");
+    navigate("/signin");
   };
 
   return (
@@ -56,7 +56,7 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div key={tab}>{tabs[tab].render()}</div>
+        {tabs[tab].render()}
       </div>
     </section>
   );

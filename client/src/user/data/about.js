@@ -1,5 +1,5 @@
 import profileImage from "../../assets/profile.jpg";
-const resume = `${import.meta.env.BASE_URL}Jemuel_Fontila_Resume.pdf`;
+import resume from "/Jemuel_Fontila_Resume.pdf";
 const about = {
   name: "Jemuel Fontila",
   image: profileImage,

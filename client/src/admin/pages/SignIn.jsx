@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FormField from "../components/FormField";
 import useForm from "../hooks/useForm";
-import { api, saveSession, clearAuth } from "../api";
+import { api, saveSession } from "../api";
 import { validateSignIn } from "../utils/validators";
 
 const initialValues = {
@@ -11,6 +11,7 @@ const initialValues = {
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     values,
@@ -24,14 +25,10 @@ const SignIn = () => {
 
 const onSubmit = async ({ email, password }) => {
   const response = await api.signIn({ email: email.trim(), password });
-  if (response.data?.role !== "admin") {
-    clearAuth();
-    throw new Error("This area is restricted to administrators.");
-  }
-  saveSession(response);
+  saveSession(response);   // stores token + user (with role)
 
   // Go back to the page they were sent from, if any
-  navigate("/admin/dashboard", { replace: true });
+  navigate(location.state?.from || "/dashboard", { replace: true });
 };
 
   return (
@@ -76,7 +73,7 @@ const onSubmit = async ({ email, password }) => {
         </button>
 
         <p className="form-footer">
-          <Link to="/">Return to portfolio</Link>
+          New here? <Link to="/signup">Create an account</Link>
         </p>
       </form>
     </section>

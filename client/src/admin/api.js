@@ -106,6 +106,12 @@ export const projectsApi = createResourceApi("projects");
 export const qualificationsApi = createResourceApi("qualifications");
 export const contactsApi = createResourceApi("contacts");
 
+// Routes (made up - rename to match your backend)
 export const api = {
+  signUp: (payload) => request("/auth/signup", { method: "POST", body: payload }),
   signIn: (payload) => request("/auth/signin", { method: "POST", body: payload }),
+  createContact: (payload) => request("/contacts", { method: "POST", body: payload }),
+  createQualification: (payload) =>
+    request("/qualifications", { method: "POST", body: payload, auth: true }),
+  createProject: (payload) => request("/projects", { method: "POST", body: payload, auth: true }),
 };

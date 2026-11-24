@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-const UserLayout = () => (
+const MainLayout = () => (
   <>
     <Navbar />
     <main>
@@ -12,4 +12,4 @@ const UserLayout = () => (
   </>
 );
 
-export default UserLayout;
+export default MainLayout;
