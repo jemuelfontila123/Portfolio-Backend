@@ -1,0 +1,498 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #171717;
+  background: #fafafa;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Layout */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  width: min(1100px, 90%);
+  margin: 0 auto;
+}
+
+.page-section {
+  padding: 100px 0;
+}
+
+/* Navbar */
+
+.navbar {
+  width: min(1100px, 90%);
+  height: 80px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: #666;
+  transition: 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #111;
+}
+
+/* Hero */
+
+.hero {
+  min-height: calc(100vh - 80px);
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 760px;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #777;
+}
+
+.hero h1 {
+  margin: 10px 0;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.hero h1 span {
+  color: #666;
+}
+
+.hero-description {
+  max-width: 600px;
+  font-size: 1.15rem;
+  color: #666;
+}
+
+.hero-actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: 1px solid #111;
+
+  font: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-primary {
+  background: #111;
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+.btn-secondary {
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: #eee;
+}
+
+/* Headings */
+
+.section-heading {
+  margin-bottom: 50px;
+}
+
+.section-heading h1 {
+  margin: 5px 0;
+  font-size: 3rem;
+  letter-spacing: -0.04em;
+}
+
+.section-heading p {
+  color: #666;
+}
+
+/* About */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.profile-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Projects */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.project-card {
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.project-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.project-content {
+  padding: 22px;
+}
+
+.project-content h2 {
+  margin-top: 0;
+}
+
+/* Education */
+
+.timeline {
+  max-width: 750px;
+}
+
+.timeline-item {
+  padding: 25px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.timeline-item span {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.timeline-item h2 {
+  margin: 5px 0;
+}
+
+.timeline-item p {
+  margin: 2px 0;
+  color: #666;
+}
+
+/* Services */
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.service-card {
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.service-card p {
+  color: #666;
+}
+
+/* Contact */
+
+.contact-form {
+  max-width: 700px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 13px;
+
+  font: inherit;
+
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 2px solid #222;
+  outline-offset: 2px;
+}
+
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #111;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #111;
+  color: #fff;
+
+  border-radius: 10px;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.logo-text {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+/* Footer */
+
+
+
+.footer {
+  padding: 30px;
+  text-align: center;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .nav-links {
+    gap: 12px;
+    font-size: 0.85rem;
+  }
+
+  .about-grid,
+  .project-grid,
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    gap: 30px;
+  }
+
+  .profile-image {
+    max-width: 350px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   Form additions 
+   ------------------------------------------------------------ */
+
+/* Narrower form for sign in / sign up */
+.auth-form {
+  max-width: 460px;
+}
+
+/* Invalid inputs */
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: #b3261e;
+}
+
+.field-error {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: #b3261e;
+}
+
+/* Form-level messages */
+.form-error,
+.form-success {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-radius: 7px;
+  font-size: 0.9rem;
+}
+
+.form-error {
+  color: #b3261e;
+  background: #fdf0ef;
+  border: 1px solid #f0c9c6;
+}
+
+.form-success {
+  color: #1b5e20;
+  background: #eef7ee;
+  border: 1px solid #c8e2c9;
+}
+
+/* Link under a form */
+.form-footer {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.form-footer a {
+  color: #111;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Disabled button while submitting */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Textareas shouldn't be dragged wider than the form */
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Small additions for the dashboard. Paste at the bottom of App.css. */
+
+.admin-tabs {
+  margin-bottom: 40px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-list-header {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.admin-actions .btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 800px) {
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
