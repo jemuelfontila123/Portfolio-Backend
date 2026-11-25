@@ -4,7 +4,7 @@ import app from "./server/express.js";
 import mountRoutes from "./routes/index.js";
 dotenv.config();
 // Check if URI is loaded properly
-console.log(process.env.MONGODB_URI)
+
 if (!process.env.MONGODB_URI) {
   console.error("Error: MONGODB_URI is not defined in environment variables.");
   process.exit(1);
@@ -12,7 +12,7 @@ if (!process.env.MONGODB_URI) {
 
 // Connect to MongoDB
 await mongoose.connect(process.env.MONGODB_URI, {
-  dbName: "Portfolio"
+  dbName: process.env.MONGODB_DB_NAME || "Portfolio"
 });
 
 

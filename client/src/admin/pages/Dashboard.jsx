@@ -7,11 +7,11 @@ import { projectsApi, qualificationsApi, clearAuth } from "../api.js";
 const tabs = {
   projects: {
     title: "Projects",
-    render: () => <ResourceManager label="Project" api={projectsApi} />,
+    render: () => <ResourceManager key="projects" label="Project" api={projectsApi} />,
   },
   qualifications: {
     title: "Qualifications",
-    render: () => <ResourceManager label="Qualification" api={qualificationsApi} />,
+    render: () => <ResourceManager key="qualifications" label="Qualification" api={qualificationsApi} />,
   },
   contacts: {
     title: "Contacts",

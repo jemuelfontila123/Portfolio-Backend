@@ -81,6 +81,7 @@ export default function ResourceManager({ label, api }) {
         <>
           <h2>{editing ? `Edit ${label}` : `Add ${label}`}</h2>
           <ResourceForm
+            label={label}
             initial={editing}
             onSubmit={handleSubmit}
             onCancel={() => setEditing(null)}

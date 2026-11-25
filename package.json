@@ -14,10 +14,14 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix client\" \"nodemon server.js\"",
-    "build": "vite build",
+    "build": "npm run build --prefix client",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-     "create-admin": "node scripts/createAdmin.js"
+    "create-admin": "node scripts/createAdmin.js",
+    "seed:portfolio": "node scripts/seedPortfolio.js",
+    "export:data": "node scripts/exportPortfolio.js",
+    "predev": "npm run export:data",
+    "prebuild": "npm run export:data"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

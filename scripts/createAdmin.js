@@ -25,7 +25,7 @@ const createAdmin = async () => {
         // Connect to MongoDB
         // Connect to MongoDB
         await mongoose.connect(process.env.MONGODB_URI, {
-          dbName: "Portfolio"
+          dbName: process.env.MONGODB_DB_NAME || "Portfolio"
         });
 
         console.log("Connected to MongoDB.");
