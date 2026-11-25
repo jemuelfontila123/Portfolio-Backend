@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../admin/api.js";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -12,28 +13,49 @@ const Contact = () => {
     message: "",
   });
 
-  // Update form data whenever an input changes
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Update form data whenever an input changes.
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormData((previousData) => ({
       ...previousData,
       [name]: value,
     }));
+
+    setError("");
   };
 
-  // Handle form submission
-  const handleSubmit = (event) => {
+  // Submit contact form to the backend API.
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Store form data temporarily in localStorage
-    localStorage.setItem("contactForm", JSON.stringify(formData));
+    if (loading) return;
 
-    // Retrieve and display the stored data
-    const storedData = JSON.parse(localStorage.getItem("contactForm"));
-    console.log("Stored Contact Form:", storedData);
+    setLoading(true);
+    setError("");
 
-    // Redirect to the home page
-    navigate("/");
+    try {
+      await api.createContact(formData);
+
+      alert("Your message has been sent successfully!");
+
+      navigate("/");
+    } catch (error) {
+      const fieldErrors = Object.values(
+        error.fieldErrors || {}
+      );
+
+      setError(
+        fieldErrors.length
+          ? fieldErrors.join(" ")
+          : error.message || "Failed to send message."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,11 +64,15 @@ const Contact = () => {
         <p className="eyebrow">CONTACT</p>
         <h1>Let's Work Together</h1>
         <p>
-          Have a question or want to discuss a project? Send me a message.
+          Have a question or want to discuss a project?
+          Send me a message.
         </p>
       </div>
 
-      <form className="contact-form" onSubmit={handleSubmit}>
+      <form
+        className="contact-form"
+        onSubmit={handleSubmit}
+      >
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
@@ -56,6 +82,8 @@ const Contact = () => {
               type="text"
               value={formData.firstName}
               onChange={handleChange}
+              minLength={2}
+              maxLength={50}
               required
             />
           </div>
@@ -68,13 +96,18 @@ const Contact = () => {
               type="text"
               value={formData.lastName}
               onChange={handleChange}
+              minLength={2}
+              maxLength={50}
               required
             />
           </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="contactNumber">Contact Number</label>
+          <label htmlFor="contactNumber">
+            Contact Number
+          </label>
+
           <input
             id="contactNumber"
             name="contactNumber"
@@ -96,6 +129,7 @@ const Contact = () => {
             type="email"
             value={formData.email}
             onChange={handleChange}
+            maxLength={254}
             required
           />
         </div>
@@ -108,12 +142,28 @@ const Contact = () => {
             rows="6"
             value={formData.message}
             onChange={handleChange}
+            minLength={10}
+            maxLength={2000}
             required
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
-          Send Message
+        {error && (
+          <p
+            className="form-error"
+            role="alert"
+            style={{ color: "red" }}
+          >
+            {error}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={loading}
+        >
+          {loading ? "Sending..." : "Send Message"}
         </button>
       </form>
     </section>
