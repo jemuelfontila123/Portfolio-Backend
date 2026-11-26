@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 import { mkdir, writeFile, rename } from "node:fs/promises";
 
@@ -11,11 +12,22 @@ import {
   qualifications as seedQualifications,
 } from "./portfolioData.js";
 
+// Generated JSON directory.
 const dir = new URL(
   "../client/src/user/data/generated/",
   import.meta.url
 );
 
+// Only recognize original seeded titles.
+const projectTitles = seedProjects.map(
+  (project) => project.title
+);
+
+const qualificationTitles = seedQualifications.map(
+  (qualification) => qualification.program ?? qualification.title
+);
+
+// Safely overwrite existing JSON files.
 async function save(name, rows) {
   const temp = new URL(`${name}.json.tmp`, dir);
   const output = new URL(`${name}.json`, dir);
@@ -26,63 +38,62 @@ async function save(name, rows) {
     "utf8"
   );
 
-  // Replace the existing JSON file.
   await rename(temp, output);
 
   console.log(`Rewritten: ${name}.json`);
 }
 
+// Retrieve only original seeded projects.
+async function getProjects() {
+  const projects = await Project.find({
+    title: { $in: projectTitles },
+  })
+    .select("title image description role outcome displayOrder")
+    .sort({ displayOrder: 1, _id: 1 })
+    .lean();
+
+  return projects.map((project) => ({
+    id: String(project._id),
+    title: project.title,
+    image: project.image ?? "",
+    description: project.description ?? "",
+    role: project.role ?? "",
+    outcome: project.outcome ?? "",
+  }));
+}
+
+// Retrieve only original seeded qualifications.
+async function getQualifications() {
+  const qualifications = await Qualification.find({
+    title: { $in: qualificationTitles },
+  })
+    .select("title year school credential displayOrder")
+    .sort({ displayOrder: 1, _id: 1 })
+    .lean();
+
+  return qualifications.map((qualification) => ({
+    id: String(qualification._id),
+    program: qualification.title,
+    year: qualification.year ?? "",
+    school: qualification.school ?? "",
+    credential: qualification.credential ?? "",
+  }));
+}
+
+// Generate portfolio snapshots.
 async function main() {
   try {
     await connectPortfolio();
 
-    const projectTitles = seedProjects.map(
-      (project) => project.title
-    );
-
-    const qualificationTitles = seedQualifications.map(
-      (qualification) => qualification.program ?? qualification.title
-    );
-
     const [projects, qualifications] = await Promise.all([
-      Project.find({
-        title: { $in: projectTitles },
-      })
-        .select("title image description role outcome displayOrder")
-        .sort({ displayOrder: 1, _id: 1 })
-        .lean(),
-
-      Qualification.find({
-        title: { $in: qualificationTitles },
-      })
-        .select("title year school credential displayOrder")
-        .sort({ displayOrder: 1, _id: 1 })
-        .lean(),
+      getProjects(),
+      getQualifications(),
     ]);
 
     await mkdir(dir, { recursive: true });
 
-    const projectData = projects.map((project) => ({
-      id: String(project._id),
-      title: project.title,
-      image: project.image ?? "",
-      description: project.description ?? "",
-      role: project.role ?? "",
-      outcome: project.outcome ?? "",
-    }));
-
-    const qualificationData = qualifications.map(
-      (qualification) => ({
-        id: String(qualification._id),
-        program: qualification.title,
-        year: qualification.year ?? "",
-        school: qualification.school ?? "",
-        credential: qualification.credential ?? "",
-      })
-    );
-
-    await save("projects", projectData);
-    await save("qualifications", qualificationData);
+    await save("projects", projects);
+    await save("qualifications", qualifications);
 
     console.log(
       `Exported ${projects.length} projects and ${qualifications.length} qualifications`
