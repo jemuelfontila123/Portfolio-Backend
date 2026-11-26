@@ -3,7 +3,8 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/Portfolio-Project/",
+
+  base: process.env.VITE_BASE_PATH || "/Portfolio-Project/",
 
   test: {
     environment: "jsdom",

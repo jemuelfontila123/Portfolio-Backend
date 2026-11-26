@@ -1,6 +1,6 @@
 [
   {
-    "id": "6b064612b99b132d83a9ea20",
+    "id": "6b077bcef6ea65c190a13cfd",
     "title": "QR Scanning for Vaccination Records",
     "image": "covid.png",
     "description": "A web and mobile application that generates and verifies QR codes for COVID-19 vaccination records. It allows establishments to quickly check whether an individual is vaccinated before entry.",
@@ -8,7 +8,7 @@
     "outcome": "Developed a secure and efficient system for generating and scanning vaccination QR codes, providing quick vaccination status verification for establishments."
   },
   {
-    "id": "6b064612b99b132d83a9ea21",
+    "id": "6b077bcef6ea65c190a13cfe",
     "title": "Online Examination System",
     "image": "exam.png",
     "description": "A web-based examination system developed for our university that allows students to take exams online with features such as secure login, timed assessments, automated grading, and result management.",
@@ -16,7 +16,7 @@
     "outcome": "Created an online examination platform that simplified exam administration and provided students with an accessible and user-friendly way to complete assessments."
   },
   {
-    "id": "6b064612b99b132d83a9ea22",
+    "id": "6b077bcef6ea65c190a13cff",
     "title": "Non-Express Entry Community",
     "image": "ircc.png",
     "description": "A community platform where individuals applying through non-Express Entry immigration pathways can share application progress, timelines, experiences, questions, and helpful information with other applicants.",
