@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from "react";
 import ResourceForm from "./ResourceForm.jsx";
 import ResourceTable from "./ResourceTable.jsx";
 import { isAdmin } from "../api.js";
 
-// Full CRUD for one resource. Pass in the api object from api.js.
+// Full CRUD for projects and qualifications.
 export default function ResourceManager({ label, api }) {
   const [items, setItems] = useState([]);
   const [editing, setEditing] = useState(null);
@@ -12,10 +13,12 @@ export default function ResourceManager({ label, api }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Retrieve all records.
   const load = async () => {
     setLoading(true);
+
     try {
-      setItems(await api.list()); // GET
+      setItems(await api.list());
       setError("");
     } catch (err) {
       setError(err.message);
@@ -30,30 +33,52 @@ export default function ResourceManager({ label, api }) {
     load();
   }, [api]);
 
+  // Create or update a resource.
   const handleSubmit = async (body) => {
     setSubmitting(true);
     setError("");
+    setSuccess("");
+
     try {
       if (editing) {
-        await api.update(editing._id, body); // PATCH
+        await api.update(editing._id, body);
         setSuccess(`${label} updated.`);
       } else {
-        await api.create(body); // POST
+        await api.create(body);
         setSuccess(`${label} added.`);
       }
+
       setEditing(null);
       await load();
+
+      return true;
     } catch (err) {
       setError(err.message);
+
+      return false;
     } finally {
       setSubmitting(false);
     }
   };
 
+  // Delete an individual resource.
   const handleDelete = async (item) => {
-    if (!window.confirm(`Delete "${item.title}"?`)) return;
+    if (!isAdmin()) return;
+
+    if (!window.confirm(`Delete "${item.title}"?`)) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+
     try {
-      await api.remove(item._id); // DELETE one
+      await api.remove(item._id);
+
+      if (editing?._id === item._id) {
+        setEditing(null);
+      }
+
       setSuccess(`${label} deleted.`);
       await load();
     } catch (err) {
@@ -61,11 +86,30 @@ export default function ResourceManager({ label, api }) {
     }
   };
 
+  // Delete all records. Admin only.
   const handleDeleteAll = async () => {
-    if (!window.confirm(`Delete ALL ${label.toLowerCase()}s? Admin only.`)) return;
+    if (!isAdmin()) return;
+
+    if (
+      !window.confirm(
+        `Delete ALL ${label.toLowerCase()}s? This action cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+
     try {
-      await api.removeAll(); // DELETE all (admin)
-      setSuccess(`All ${label.toLowerCase()}s deleted.`);
+      await api.removeAll();
+
+      setEditing(null);
+
+      setSuccess(
+        `All ${label.toLowerCase()}s deleted.`
+      );
+
       await load();
     } catch (err) {
       setError(err.message);
@@ -74,12 +118,24 @@ export default function ResourceManager({ label, api }) {
 
   return (
     <div>
-      {error && <p className="form-error">{error}</p>}
-      {success && <p className="form-success">{success}</p>}
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
+
+      {success && (
+        <p className="form-success" role="status">
+          {success}
+        </p>
+      )}
 
       {isAdmin() && (
         <>
-          <h2>{editing ? `Edit ${label}` : `Add ${label}`}</h2>
+          <h2>
+            {editing ? `Edit ${label}` : `Add ${label}`}
+          </h2>
+
           <ResourceForm
             label={label}
             initial={editing}
@@ -92,8 +148,12 @@ export default function ResourceManager({ label, api }) {
 
       <div className="admin-list-header">
         <h2>All {label}s</h2>
+
         {isAdmin() && (
-          <button className="btn btn-secondary" onClick={handleDeleteAll}>
+          <button
+            className="btn btn-secondary"
+            onClick={handleDeleteAll}
+          >
             Delete All
           </button>
         )}
@@ -103,11 +163,18 @@ export default function ResourceManager({ label, api }) {
         <p>Loading...</p>
       ) : (
         <ResourceTable
+          label={label}
           items={items}
           canEdit={isAdmin()}
           onEdit={(item) => {
             setEditing(item);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            setError("");
+            setSuccess("");
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
           }}
           onDelete={handleDelete}
         />

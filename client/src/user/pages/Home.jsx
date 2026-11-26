@@ -16,6 +16,11 @@ const Home = () => {
           {home.description}
         </p>
 
+        <p className="hero-description">
+         Building innovative digital solutions through
+          software engineering and artificial intelligence.
+        </p>
+        
         <div className="hero-actions">
           <Link to="/about" className="btn btn-primary">
             About Me
