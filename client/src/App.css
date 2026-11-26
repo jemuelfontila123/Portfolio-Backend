@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -101,7 +102,7 @@ main {
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #777;
+  color: #666;
 }
 
 .hero h1 {
@@ -230,7 +231,7 @@ main {
 }
 
 .timeline-item span {
-  color: #777;
+  color: #666;
   font-size: 0.9rem;
 }
 
@@ -303,8 +304,8 @@ main {
   outline-offset: 2px;
 }
 
-
 /* Logo */
+
 .logo {
   display: flex;
   align-items: center;
@@ -336,14 +337,13 @@ main {
   font-weight: 600;
   letter-spacing: -0.02em;
 }
+
 /* Footer */
-
-
 
 .footer {
   padding: 30px;
   text-align: center;
-  color: #777;
+  color: #666;
   border-top: 1px solid #eee;
 }
 
@@ -376,15 +376,17 @@ main {
 }
 
 /* ------------------------------------------------------------
-   Form additions 
+   Form additions
    ------------------------------------------------------------ */
 
 /* Narrower form for sign in / sign up */
+
 .auth-form {
   max-width: 460px;
 }
 
 /* Invalid inputs */
+
 .form-group input.invalid,
 .form-group textarea.invalid {
   border-color: #b3261e;
@@ -397,6 +399,7 @@ main {
 }
 
 /* Form-level messages */
+
 .form-error,
 .form-success {
   margin: 0 0 20px;
@@ -418,6 +421,7 @@ main {
 }
 
 /* Link under a form */
+
 .form-footer {
   margin-top: 20px;
   color: #666;
@@ -431,17 +435,21 @@ main {
 }
 
 /* Disabled button while submitting */
+
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* Textareas shouldn't be dragged wider than the form */
+
 .form-group textarea {
   resize: vertical;
 }
 
-/* Small additions for the dashboard. Paste at the bottom of App.css. */
+/* ------------------------------------------------------------
+   Admin Dashboard
+   ------------------------------------------------------------ */
 
 .admin-tabs {
   margin-bottom: 40px;
@@ -476,7 +484,7 @@ main {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #777;
+  color: #666;
 }
 
 .admin-actions {

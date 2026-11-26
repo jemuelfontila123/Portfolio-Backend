@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ContactForm from "./ContactForm.jsx";
 import ContactTable from "./ContactTable.jsx";
-import { contactsApi, isAdmin } from "../../api.js";
+import { contactsApi, isAdmin } from "../api.js";
 
 // Full CRUD for contacts. Non-admins only see the list.
 export default function ContactManager() {

@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ResourceManager from "./ResourceManager.jsx";
-import ContactManager from "./ContactManager.jsx";
-import { projectsApi, qualificationsApi, clearAuth } from "../../api.js";
+import ResourceManager from "../components/ResourceManager.jsx";
+import ContactManager from "../components/ContactManager.jsx";
+import { projectsApi, qualificationsApi, clearAuth } from "../api.js";
 
 const tabs = {
   projects: {
     title: "Projects",
-    render: () => <ResourceManager label="Project" api={projectsApi} />,
+    render: () => <ResourceManager key="projects" label="Project" api={projectsApi} />,
   },
   qualifications: {
     title: "Qualifications",
-    render: () => <ResourceManager label="Qualification" api={qualificationsApi} />,
+    render: () => <ResourceManager key="qualifications" label="Qualification" api={qualificationsApi} />,
   },
   contacts: {
     title: "Contacts",

@@ -1,18 +1,18 @@
 import { Routes, Route } from "react-router-dom";
 
-import MainLayout from "./components/MainLayout";
-import StandaloneLayout from "./components/StandaloneLayout";
+import MainLayout from "./user/components/MainLayout";
+import StandaloneLayout from "./admin/components/StandaloneLayout";
 
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import Education from "./pages/Education";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn"
-import Dashboard from "./pages/admin/Dashboard"
-import RequireAuth from "./components/RequireAuth"
+import Home from "./user/pages/Home";
+import About from "./user/pages/About";
+import Projects from "./user/pages/Projects";
+import Education from "./user/pages/Education";
+import Services from "./user/pages/Services";
+import Contact from "./user/pages/Contact";
+import SignUp from "./admin/pages/SignUp";
+import SignIn from "./admin/pages/SignIn"
+import Dashboard from "./admin/pages/Dashboard"
+import RequireAuth from "./admin/components/RequireAuth"
 
 const App = () => {
   return (

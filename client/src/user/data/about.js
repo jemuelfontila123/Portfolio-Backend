@@ -1,4 +1,4 @@
-import profileImage from "../assets/profile.jpg";
+import profileImage from "../../assets/profile.jpg";
 import resume from "/Jemuel_Fontila_Resume.pdf";
 const about = {
   name: "Jemuel Fontila",

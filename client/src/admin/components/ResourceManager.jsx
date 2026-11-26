@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ResourceForm from "./ResourceForm.jsx";
 import ResourceTable from "./ResourceTable.jsx";
-import { isAdmin } from "../../api.js";
+import { isAdmin } from "../api.js";
 
 // Full CRUD for one resource. Pass in the api object from api.js.
 export default function ResourceManager({ label, api }) {
@@ -81,6 +81,7 @@ export default function ResourceManager({ label, api }) {
         <>
           <h2>{editing ? `Edit ${label}` : `Add ${label}`}</h2>
           <ResourceForm
+            label={label}
             initial={editing}
             onSubmit={handleSubmit}
             onCancel={() => setEditing(null)}

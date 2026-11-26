@@ -3,3 +3,16 @@ node_modules/
 
 # Environment variables
 .env
+.env.*
+!.env.example
+
+# Production builds
+dist/
+
+# Testing artifacts
+coverage/
+cypress/screenshots/
+cypress/videos/
+
+# Operating system files
+.DS_Store
