@@ -84,10 +84,6 @@ export default function ResourceForm({ label, initial, onSubmit, onCancel, submi
           <input id={name} name={name} value={values[name]} onChange={handleChange} />
         </div>
       ))}
-      <div className="form-group">
-        <label htmlFor="displayOrder">Display order (lowest first)</label>
-        <input id="displayOrder" name="displayOrder" type="number" min="0" value={values.displayOrder} onChange={handleChange} />
-      </div>
       <div className="hero-actions">
         <button className="btn btn-primary" type="submit" disabled={submitting}>
           {submitting ? "Saving..." : initial ? "Update" : "Add"}
