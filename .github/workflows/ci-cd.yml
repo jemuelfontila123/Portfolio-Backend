@@ -1,0 +1,165 @@
+
+name: MyPortfolio CI/CD
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - staging
+      - main
+
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    name: Test and Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    services:
+      mongodb:
+        image: mongo:8.0
+        ports:
+          - 27017:27017
+
+    env:
+      NODE_ENV: test
+      MONGODB_URI: mongodb://127.0.0.1:27017/PortfolioTest
+      MONGODB_DB_NAME: PortfolioTest
+      JWT_SECRET: ci-test-only-secret-not-for-production
+      PORT: 5000
+      CLIENT_URL: http://localhost:5173
+      VITE_API_BASE_URL: http://localhost:5000/api
+      VITE_BASE_PATH: /Portfolio-Project/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix client
+
+      - name: Wait for MongoDB
+        run: |
+          for i in {1..30}; do
+            if (echo > /dev/tcp/127.0.0.1/27017) 2>/dev/null; then
+              echo "MongoDB is ready."
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "MongoDB failed to start."
+          exit 1
+
+      - name: Seed test database
+        run: npm run seed:portfolio
+
+      - name: Generate portfolio JSON
+        run: npm run export:data
+
+      - name: Run Vitest unit tests
+        run: npm run test --prefix client
+
+      - name: Start backend and frontend
+        run: |
+          node server.js > backend.log 2>&1 &
+
+          npm run dev --prefix client -- \
+            --host 127.0.0.1 \
+            --strictPort > frontend.log 2>&1 &
+
+      - name: Wait for application
+        run: |
+          for i in {1..60}; do
+            if curl -fsS http://localhost:5000/api/health \
+              && curl -fsS http://localhost:5173/Portfolio-Project/ > /dev/null; then
+
+              echo "Application is ready."
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          echo "Application failed to start."
+          cat backend.log frontend.log
+          exit 1
+
+      - name: Run Cypress end-to-end tests
+        run: npm run test:e2e --prefix client
+
+      - name: Build production frontend
+        run: npm run build --prefix client
+        env:
+          VITE_BASE_PATH: /
+          VITE_API_BASE_URL: https://myportfolio-api-9sb7.onrender.com/api
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-production-build
+          path: client/dist
+          retention-days: 7
+
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-failure-evidence
+          path: |
+            backend.log
+            frontend.log
+            client/cypress/screenshots/
+            client/cypress/videos/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Render
+    needs: test-and-build
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
+    concurrency:
+      group: portfolio-production-deployment
+      cancel-in-progress: false
+
+    steps:
+      - name: Trigger backend deployment
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
+        run: |
+          curl --fail --silent --show-error \
+            --output /dev/null "$DEPLOY_HOOK"
+
+          echo "Backend deployment triggered."
+
+      - name: Trigger frontend deployment
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}
+        run: |
+          curl --fail --silent --show-error \
+            --output /dev/null "$DEPLOY_HOOK"
+
+          echo "Frontend deployment triggered."
